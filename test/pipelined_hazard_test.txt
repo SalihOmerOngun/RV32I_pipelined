@@ -1,0 +1,259 @@
+00a00513 addi x10, x0, 10   # x10 (a0) = 0 + 10
+01400593 addi x11, x0, 20   # x11 (a1) = 0 + 20
+01e00613 addi x12, x0, 30   # x12 (a2) = 0 + 30
+02800693 addi x13, x0, 40   # x13 (a3) = 0 + 40
+40d60333 sub x6, x12, x13   # x6 (t1) = x12 - x13 (-10) hazard fall edge yaz
+03200713 addi x14, x0, 50   # x14 (a4) = 0 + 50
+00a743b3 xor x7, x14, x10   # x7 (t2) = x14 XOR x10 hazard
+40d60333 sub x6, x12, x13   
+00b502b3 add x5, x10, x11   # x5 (t0) = x10 + x11 (30) 
+00a743b3 xor x7, x10, x14   # x7 (t2) = x14 XOR x10 hazard 
+00c5fe33 and x28, x11, x12  # x28 (t3) = x11 AND x12
+00e6eeb3 or x29, x13, x14   # x29 (t4) = x13 OR x144
+
+00512023 sw x5, 0(x2)       # x5 değerini belleğe yaz (x2 = sp)
+00612223 sw x6, 4(x2)       # x6 değerini belleğe yaz
+00712423 sw x7, 8(x2)       # x7 değerini belleğe yaz
+00012403 lw x8, 0(x2)       # x8 (s0)'a bellekten yükle
+00412483 lw x9, 4(x2)       # x9 (s1)'e bellekten yükle
+00812903 lw x18, 8(x2)      # x18 (s2)'ye bellekten yükle 
+
+
+
+
+
+00a00093
+00308133
+00500313
+06400393
+03238413
+01940493
+00940533                                
+006405b3
+
+
+                        addi x1, x0, 10      # x1 = 0 + 10 = 10
+                        add  x2, x1, x3      # x2 = x1 + x3, x1'e bağımlılık var
+
+                        
+                        addi x6, x0, 5       
+
+                        # Örnek 3: Zincirleme hazard
+                        addi x7, x0, 100     # x7 = 0 + 100 = 100
+                        addi x8, x7, 50      # x8 = x7 + 50, x7'ye bağımlılık var
+                        addi x9, x8, 25      # x9 = x8 + 25, x8'e bağımlılık var
+	                    add  x10,x8,x9      
+                        add  x11,x8,x6       # register file da nededge de yaz
+
+
+
+06400093
+03200293
+0050a423
+0080a103           
+0c810193
+00116233
+
+
+                        addi x1, x0, 100      # x1 = 100
+                        addi x5, x0, 50       # x5 = 50 (yüklemek istediğimiz değer)
+                        sw   x5, 8(x1)        # Mem[108] = x5 = 50
+                    
+                        lw   x2, 8(x1)        # x2 = Mem[108] = 50
+                        addi x3, x2, 200      # x3 = 50 + 200 = 250
+                        or   x4, x2, x1       # x4 = 50 | 100 = 118
+
+
+00f00a13
+01400a13                  
+00aa0a93
+                        	addi x20,x0,15
+                            addi x20,x0,20
+                            addi x21,x20,10
+
+
+
+00a00093  0
+01400113  4
+02000fef jal  8
+01e00193 c
+00a00e13 10
+00a00e93 14
+00a00f13 18
+00a00c93 1c
+00a00d13 20
+00a00d93 24
+02800213 28 buraya gelmeli
+03200293 2c
+03c00313 30
+04600393 38
+
+
+
+            ADDI x1, x0, 10      # x1 = 10
+            ADDI x2, x0, 20      # x2 = 20
+            JAL x31, target      # x31 = PC+4, PC = target (jump to target label)
+
+            ADDI x3, x0, 30      # bu komut yok sayılacak
+            ADDI x28, x0, 10      # x1 = 10
+            ADDI x29, x0, 10      # x1 = 10
+            ADDI x30,x0,10
+            ADDI x25,x0,10
+            ADDI x26,x0,10   
+            ADDI x27,x0,10    
+            # target etiketi burada başlıyor
+        target:
+            ADDI x4, x0, 40      # Bu komut target etiketine sıçrayan komut
+            ADDI x5, x0, 50      # Bu komut da target etiketi içinde
+            ADDI x6, x0, 60      # Bu komut da target etiketi içinde
+            ADDI x7, x0, 70      
+
+
+
+
+
+06400093
+03200293
+0050a423
+02000fef
+0080a103
+00a00e13
+00a00e93
+00a00f13
+00a00c93
+00a00d13
+00a00d93
+02800213
+03200293
+03c00313
+04600393
+
+
+            addi x1, x0, 100      # x1 = 100
+            addi x5, x0, 50       # x5 = 50 (yüklemek istediğimiz değer)
+            sw   x5, 8(x1)        # Mem[108] = x5 = 50
+            JAL x31, target      # x31 = PC+4, PC = target (jump to target label)
+
+            lw   x2, 8(x1)        # x2 = Mem[108] = 50
+            ADDI x28, x0, 10      # x1 = 10
+            ADDI x29, x0, 10      # x1 = 10
+            ADDI x30,x0,10
+            ADDI x25,x0,10
+            ADDI x26,x0,10   
+            ADDI x27,x0,10    
+            # target etiketi burada başlıyor
+        target:
+            ADDI x4, x0, 40      # Bu komut target etiketine sıçrayan komut
+            ADDI x5, x0, 50      # Bu komut da target etiketi içinde
+            ADDI x6, x0, 60      # Bu komut da target etiketi içinde
+            ADDI x7, x0, 70      
+
+
+
+06400093
+06400293
+02128063
+0080a103
+00a00e13
+00a00e93
+00a00f13
+00a00c93
+00a00d13
+00a00d93
+02800213
+03200293
+03c00313
+04600393
+
+            addi x1, x0, 100      # x1 = 100
+            addi x5, x0, 100       # x5 = 100 (yüklemek istediğimiz değer)
+            beq  x5,x1, target     
+
+            lw   x2, 8(x1)        # x2 = Mem[108] = 50
+            ADDI x28, x0, 10      # x1 = 10
+            ADDI x29, x0, 10      # x1 = 10
+            ADDI x30,x0,10
+            ADDI x25,x0,10
+            ADDI x26,x0,10   
+            ADDI x27,x0,10    
+            # target etiketi burada başlıyor
+        target:
+            ADDI x4, x0, 40      # Bu komut target etiketine sıçrayan komut
+            ADDI x5, x0, 50      # Bu komut da target etiketi içinde
+            ADDI x6, x0, 60      # Bu komut da target etiketi içinde
+            ADDI x7, x0, 70      
+
+
+06400093
+03200293
+02128063
+0080a103
+00a00e13
+00a00e93
+00a00f13
+00a00c93
+00a00d13
+00a00d93
+02800213
+03200293
+03c00313
+04600393
+
+
+            addi x1, x0, 100      # x1 = 100
+            addi x5, x0, 50       # x5 = 50 (yüklemek istediğimiz değer)
+            beq  x5,x1, target     
+
+            lw   x2, 8(x1)        # x2 = Mem[108] = 50 //stall olmaycak rs1 ve rs2, rd'ye esit degil
+            ADDI x28, x0, 10      # x1 = 10
+            ADDI x29, x0, 10      # x1 = 10
+            ADDI x30,x0,10
+            ADDI x25,x0,10
+            ADDI x26,x0,10   
+            ADDI x27,x0,10    
+            # target etiketi burada başlıyor
+        target:
+            ADDI x4, x0, 40      # Bu komut target etiketine sıçrayan komut
+            ADDI x5, x0, 50      # Bu komut da target etiketi içinde
+            ADDI x6, x0, 60      # Bu komut da target etiketi içinde
+            ADDI x7, x0, 70      
+
+
+                            
+
+06400093
+06400293
+00102423
+00802103
+00510e63
+00a00e13
+00a00e93
+00a00f13
+00a00c93
+00a00d13
+00a00d93
+02800213
+03200293
+03c00313
+04600393
+
+
+
+            addi x1, x0, 100      # x1 = 100
+            addi x5, x0, 100       # x5 = 100 (yüklemek istediğimiz değer)
+            sw   x1, 8(x0)        # Mem[108] = x1 = 100
+            lw   x2, 8(x0)        # x2 = Mem[108] = 100
+            beq  x2,x5, target                                                          
+
+            ADDI x28, x0, 10      # x1 = 10
+            ADDI x29, x0, 10      # x1 = 10
+            ADDI x30,x0,10
+            ADDI x25,x0,10
+            ADDI x26,x0,10   
+            ADDI x27,x0,10    
+            # target etiketi burada başlıyor
+        target:
+            ADDI x4, x0, 40      # Bu komut target etiketine sıçrayan komut
+            ADDI x5, x0, 50      # Bu komut da target etiketi içinde
+            ADDI x6, x0, 60      # Bu komut da target etiketi içinde
+            ADDI x7, x0, 70      # Bu komut x4'e geri dönerken çalışmaz            

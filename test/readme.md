@@ -1,0 +1,1 @@
+pipelined_hazard dosyasında ekseriyeti hazard sorunları içeren assembly kodu ve machine kodu var. Pipelined.mem dosyasında aynı dosyanın sadece machine kodları var
