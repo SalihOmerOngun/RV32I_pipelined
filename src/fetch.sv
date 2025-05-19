@@ -23,9 +23,8 @@ module fetch
 
 
     initial begin  
-        //$readmemh("D:/SSTU_lab_project/pipelined.mem", instr_mem, 0, 2047); //Windows için
+        //$readmemh("D:/SSTU_lab_project/imem.mem", instr_mem, 0, 2047); //Windows için
         $readmemh(IMemInitFile, instr_mem, 0, 2047);
-        //$readmemh(DMemInitFile, data_mem, 0, 2047); 
     end   
 
     always_ff @(posedge clk_i) begin  

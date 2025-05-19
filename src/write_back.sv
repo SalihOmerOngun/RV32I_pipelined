@@ -33,11 +33,11 @@ module write_back // write_back
                 load_adres = alu_out_i;
                 case(instr[14:12])
                     3'b000  : begin
-                        reg_data = {{24({load_mem_data[7]})}, load_mem_data[7:0]};
+                        reg_data = {{24{load_mem_data[7]}}, load_mem_data[7:0]};
                         //reg_data = {{24'({data_mem[alu_out_i[10:0]][7]})}, data_mem[alu_out_i[10:0]][7:0]};
                     end 
                     3'b001  : begin
-                        reg_data = {{16({load_mem_data[7]})}, load_mem_data[15:0]};
+                        reg_data = {{16{load_mem_data[15]}}, load_mem_data[15:0]};
                         //reg_data = {{16'({data_mem[alu_out_i[10:0]][7]})}, data_mem[alu_out_i[10:0]][15:0]};
                     end 
                     3'b010  : begin

@@ -56,10 +56,10 @@ module hazard_unit
                     else if(instr_memory[6:0] == 7'b0000011) begin  // LOAD
                         case(instr_memory[14:12])
                             3'b000  : begin
-                                rs1_hazard = {{24({load_mem_data_hazard[7]})}, load_mem_data_hazard[7:0]};
+                                rs1_hazard = {{24{load_mem_data_hazard[7]}}, load_mem_data_hazard[7:0]};
                             end 
                             3'b001  : begin
-                                rs1_hazard = {{16({load_mem_data_hazard[7]})}, load_mem_data_hazard[15:0]};
+                                rs1_hazard = {{16{load_mem_data_hazard[15]}}, load_mem_data_hazard[15:0]};
                             end 
                             3'b010  : begin
                                 rs1_hazard = load_mem_data_hazard;
