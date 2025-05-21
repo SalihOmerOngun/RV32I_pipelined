@@ -4,7 +4,7 @@ module riscv_multicycle
   import riscv_pkg::*;
 #(
     parameter DMemInitFile  = "dmem.mem",       // data memory initialization file
-    parameter IMemInitFile  = "imem.mem"       // instruction memory initialization file
+    parameter IMemInitFile  = "pipelined.mem"       // instruction memory initialization file
 )    (
     input  logic clk_i,
     input  logic rstn_i,
@@ -109,8 +109,8 @@ module riscv_multicycle
 /////////////////////////////////////////////////////////////////  instantiation ///////////////////////////////////////////////////////
     fetch 
     #(
-        .DMemInitFile("dmem.mem"),
-        .IMemInitFile("imem.mem")
+        .DMemInitFile(DMemInitFile),
+        .IMemInitFile(IMemInitFile)
     ) fetch_inst (
         .clk_i(clk_i),
         .rstn_i(rstn_i),
