@@ -176,6 +176,14 @@ module decode  // decode
                 shamt_o <= shamt;
                 instr_mem_data_o <= instr_mem_data;
             end
+            else if(stall_en == 1) begin // nop gondermek gerekiyor ekstrem bir durum var src'de readme'ye eklerim bakarsın
+                instr_o <= 32'h00000013; // nop 
+                rs1_o <= 32'b0; // hazard icin
+                rs2_o <= 32'b0; // hazard icin
+                shamt_o <= 5'b0;
+                pc_o <= pc_o;
+                instr_mem_data_o<= 32'b0;                 
+            end
        end
     end
 endmodule
