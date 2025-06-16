@@ -20,8 +20,7 @@
 
 
             Ancak bizim en yukarıda kodda. stall yüzünden decode lw x3'ü çıkışa verdiginde x2 registera yazılmış olacak ama sen eski rs1 rs2 yi tekrar çıkışa verdigin için x2'nin eski halini alıyorsun. bunu lw x3 stall olunca giriş instr vererek yapabilirsin ama bu seferde başka sıkıntılar oluyor
-            
-
+            O yüzden;
             if(stall_en == 0) begin // sadece instr_o<= instr yapmak yetmez. instr yenilendiği için rs1 rs2(decode içinde olup output a verilen) ler değisecek
                 instr_o <= instr; 
                 pc_o <= pc_i;
