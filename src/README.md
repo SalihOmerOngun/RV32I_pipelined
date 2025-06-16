@@ -19,7 +19,7 @@
             Mesela kod böyle olunca addi x6 için memoryden execute da forwarding, add x4 için write backden forwarding, sub x5 de register file a negedge de yazıldığı için decoda sorunsuz okuma yapılıyor.
 
 
-            Ancak bizim en yukarıda kodda. stall yüzünden decode lw x3'ü çıkışa verdiginde x2 registera yazılmış olacak ama sen eski rs1 rs2 yi tekrar çıkışa verdigin için x2'nin eski halini alıyorsun. bunu lw x3 stall olunca giriş instr vererek yapabilirsin ama bu seferde başka sıkıntılar oluyor
+            Ancak bizim en yukarıda kodda. stall yüzünden decode lw x3'ü çıkışa tekrar verdiginde x2 registera yazılmış olacak ama sen eski rs1 rs2 yi tekrar çıkışa verdigin için x2'nin eski halini alıyorsun. bunu lw x3 stall olunca giriş instr vererek yapabilirsin ama bu seferde başka sıkıntılar oluyor. lw x3 stall olmadan önce ilk kez çıkışa gittiğinde forward oluyor addi x2 'den ama tekrar aynı instr gittiğinde forward olmuyor registera yazılıyor ancak sen eski rs1 rs2 aldığın için yanlış oluyor.
             O yüzden nop göndermek gerekiyor stall olunca
             if(stall_en == 0) begin // sadece instr_o<= instr yapmak yetmez. instr yenilendiği için rs1 rs2(decode içinde olup output a verilen) ler değisecek
                 instr_o <= instr; 
