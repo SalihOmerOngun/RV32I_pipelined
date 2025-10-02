@@ -1,6 +1,13 @@
 
     Normalde stall olunca decode ve diğer aşamalrdaki çıkışlar tekrar girişe veriliyordu. Ancak aşağadaki ekstrem durumu yani farkettim dual issue yaparken.
 
+06400093
+0010a023
+06400113
+22b00413
+00012183
+1bc18213
+
 		addi x1,x0,100
         sw x1,0(x1)
     	addi x2,x0,100
@@ -21,12 +28,5 @@
 
             Ancak bizim en yukarıda kodda. stall yüzünden decode lw x3'ü çıkışa tekrar verdiginde x2 registera yazılmış olacak ama sen eski rs1 rs2 yi tekrar çıkışa verdigin için x2'nin eski halini alıyorsun çünkü wb de x2 registera lw3 tekrar çıkışa geldiğinde aynı anda yazaılıyor dolayısıyla lw x3 tekrar gelince eski x2 değeri kalıyor registerda wb stage de. bunu lw x3 stall olunca giriş instr vererek yapabilirsin ama bu seferde başka sıkıntılar oluyor. lw x3 stall olmadan önce ilk kez çıkışa gittiğinde forward oluyor addi x2 'den ama tekrar aynı instr gittiğinde forward olmuyor registera yazılıyor ancak sen eski rs1 rs2 aldığın için yanlış oluyor.
             O yüzden nop göndermek gerekiyor stall olunca
-            if(stall_en == 0) begin // sadece instr_o<= instr yapmak yetmez. instr yenilendiği için rs1 rs2(decode içinde olup output a verilen) ler değisecek
-                instr_o <= instr; 
-                pc_o <= pc_i;
-                rs1_o <= rs1;
-                rs2_o <= rs2;
-                shamt_o <= shamt;
-                instr_mem_data_o <= instr_mem_data;   
-                    
-                    
+
+![alt text](image-1.png)
